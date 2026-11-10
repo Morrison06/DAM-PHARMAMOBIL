@@ -30,12 +30,19 @@ kotlin {
         androidResources {
             enable = true
         }
+        withHostTest {
+            isIncludeAndroidResources = true
+        }
     }
 
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
             api(libs.koin.android)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
 
         commonMain.dependencies {
