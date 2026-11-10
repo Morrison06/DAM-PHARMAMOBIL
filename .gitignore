@@ -1,0 +1,33 @@
+# Gradle / IntelliJ / Android
+.gradle/
+.kotlin/
+.idea/
+*.iml
+**/build/
+local.properties
+.DS_Store
+.cxx/
+.externalNativeBuild/
+
+# Credenciales y llaves de firma (NUNCA versionar)
+keystore.properties
+*.jks
+*.keystore
+*.p12
+*.p8
+*.mobileprovision
+*.cer
+*.pfx
+*.pem
+*.key
+*.env
+.env*
+
+# Builds y archivos derivados
+*.apk
+*.aab
+*.apks
+*.ipa
+*.xcarchive
+DerivedData/
+xcuserdata/
