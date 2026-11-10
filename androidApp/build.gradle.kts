@@ -77,21 +77,16 @@ android {
     buildFeatures { compose = true }
 }
 
-// No permitimos generar accidentalmente un "release" sin la firma personal.
-// Los builds de desarrollo y las pruebas siguen funcionando sin secretos.
-gradle.taskGraph.whenReady {
-    if (!hasReleaseCredentials && allTasks.any { task ->
-            task.project == project && (
-                task.name == "assembleRelease" ||
-                task.name == "bundleRelease" ||
-                task.name == "packageRelease" ||
-                task.name == "signReleaseBundle" ||
-                task.name == "validateSigningRelease"
-            )
-        }) {
-        throw GradleException(
-            "Falta keystore.properties válido. Copia keystore.properties.example " +
-                "y configura un almacén .jks privado antes de generar release."
-        )
+// Detener las tareas de salida de release si faltan credenciales locales.
+// No impide sincronizar Gradle ni ejecutar assembleDebug.
+tasks.configureEach {
+    if (name == "assembleRelease" || name == "bundleRelease") {
+        doFirst {
+            if (!hasReleaseCredentials) {
+                throw GradleException(
+                    "Release sin firmar: configura keystore.properties privado antes de compilar."
+                )
+            }
+        }
     }
 }

@@ -38,6 +38,10 @@ kotlin {
             api(libs.koin.android)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
+
         commonMain.dependencies {
             api(libs.koin.core)
             implementation(libs.koin.compose)
