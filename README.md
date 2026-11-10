@@ -1,37 +1,35 @@
-# PharmaMobil - Sesión 09
+# PharmaMobil — KMP | Sesión 14
 
-Práctica de **Desarrollo de Aplicaciones Móviles** con Kotlin Multiplatform.
+Proyecto de **Desarrollo de Aplicaciones Móviles**, UPEU. Estudiante: **Jim Guillermo Cueva Roman**.
 
-## Rama de entrega
+Esta rama conserva el desarrollo previo de `feature/expect-actual-morrison` (Kotlin Multiplatform, vista de productos y detalle, Koin, funcionalidades nativas Android/iOS).
 
-`feature/expect-actual-morrison`
+## Entrega de la sesión 14
 
-## Capacidades nativas implementadas
+- Firma release Android con `keystore.properties` privado (plantilla `keystore.properties.example`).
+- `versionCode=1`, `versionName=1.0.0` y R8 activo.
+- Gradle Wrapper reproducible 9.1.0.
+- Script `scripts/generar-builds-android.sh` para obtener **AAB + APK** firmados y verificar el APK.
+- Documentación y matriz de pruebas **sin inventar resultados**.
 
-### Formato de moneda con expect/actual
+**Guías y registros:** [Instalación y firma](docs/GUIA-INSTALACION-SESION14.md) · [Ficha de integración](docs/FICHA-INTEGRACION-SESION14.md) · [Pruebas](docs/MATRIZ-PRUEBAS-SESION14.md) · [Cotejo](docs/CHECKLIST-SESION14.md).
 
-- `commonMain/platform/Formato.kt`: declaración `expect`.
-- `androidMain/platform/Formato.android.kt`: implementación Android con `NumberFormat`.
-- `iosMain/platform/Formato.ios.kt`: implementación iOS con `NSNumberFormatter`.
-- El formato se aplica en `ProductoUi`, dentro de presentation.
+### Inicio rápido en Android Studio
 
-### Compartir mediante interfaz + inyección
+```bash
+./gradlew :androidApp:assembleDebug
+cp keystore.properties.example keystore.properties
+# Edita keystore.properties con la clave y credenciales LOCALES
+EQUIPO=Equipo1 bash scripts/generar-builds-android.sh
+```
 
-- `domain/platform/Compartidor.kt`: contrato común.
-- `CompartidorAndroid.kt`: usa `Intent.ACTION_SEND` y `FLAG_ACTIVITY_NEW_TASK`.
-- `CompartidorIos.kt`: usa `UIActivityViewController`.
-- Ambos `platformModule` registran su implementación con Koin.
-- `DetalleProductoViewModel` depende del contrato `Compartidor`.
+La firma requiere crear antes el almacén con `keytool`; sigue la guía. Los archivos reales de entrega se excluyen de Git deliberadamente. **Jamás subas .jks, contraseñas o keystore.properties.**
 
-### Pantalla de detalle
+### Limitaciones actuales
 
-La pantalla de detalle incluye el botón **Compartir** y mantiene las APIs nativas fuera de presentation.
+Este repositorio corresponde al avance de sesión 09: el almacenamiento de productos es **en memoria**. Aún no acredita autenticación ni REST de PharmaSoft, CRUD completo, base local persistente, sincronización offline-first o pruebas en dispositivos físicos. iOS requiere macOS, Xcode y firma Apple. Ver estado real de cada criterio en la ficha y checklist.
 
-## Evidencias
+### Antecedentes
 
-Consultar:
-
-- `docs/EVIDENCIAS-SESION-09.md`
-- `docs/REPORTE-PRUEBAS-SESION09.md`
-
-La compilación de iOS requiere macOS + Xcode.
+- [Documentación de la sesión 09](docs/REPORTE-PRUEBAS-SESION09.md).
+- Basado en el proyecto KMP de clase; los cambios de sesión 14 se hacen en una rama separada, sin sustituir el trabajo previo.
